@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+/* --- About Us Container --- */
+.aboutus-container {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.aboutus-container h1 {
+    font-size: 2.8em;
+    color: #a0522d; /* Brown */
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* --- About Section Styling --- */
+.about-section {
+    margin-bottom: 50px;
+    padding: 40px;
+    border-radius: 8px;
+    background-color: #fff; /* Default background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.about-section.alt-background {
+    background-color: #f0e6d4; /* Beige alternate background */
+}
+
+.about-section h2 {
+    font-size: 2em;
+    color: #a0522d; /* Brown */
+    margin-bottom: 20px;
+    text-align: center; /* Center section titles */
+}
+
+.about-section p {
+    font-size: 1.1em;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 25px; /* Space below paragraph */
+    text-align: justify; /* Justify text for better readability */
+}
+
+.about-image {
+    display: block; /* Center image */
+    max-width: 60%; /* Control image size */
+    height: auto;
+    margin: 20px auto 0 auto; /* Center image and add top margin */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* --- Optional Team Section Styling --- */
+/* Add styles for team members if implemented */
+/* .team-member { ... } */
+
+/* --- Footer --- */
+/* Footer styles are likely inherited from home.css via the JSP include */
+/* Add specific footer overrides here if needed */

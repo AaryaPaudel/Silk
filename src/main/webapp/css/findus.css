@@ -1,0 +1,110 @@
+@charset "UTF-8";
+
+/* --- Find Us Container --- */
+.findus-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.findus-container h1 {
+    font-size: 2.8em;
+    color: #a0522d; /* Brown */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* --- Hours Info --- */
+.findus-container .hours-info {
+    font-size: 1.2em;
+    color: #555;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* --- Map and Locations Wrapper --- */
+.map-locations-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 30px;
+}
+
+/* --- Map Styling --- */
+#map {
+    flex: 2; /* Take more space */
+    min-height: 400px; /* Ensure a minimum height */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden; /* Hide any map overflow */
+    text-align: center; /* Center the placeholder text */
+    padding: 20px;
+    font-style: italic;
+    color: #888;
+}
+
+/* --- Location List Styling --- */
+.location-list {
+    flex: 1; /* Take remaining space */
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.location-list h2 {
+    font-size: 1.8em;
+    color: #a0522d; /* Brown */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.location-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.location-list li {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.location-list li:last-child {
+    border-bottom: none; /* Remove border on last item */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.location-list h3 {
+    font-size: 1.3em;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.location-list p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.location-list .map-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #a0522d; /* Brown */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.location-list .map-link:hover {
+    color: #80421e; /* Darker brown */
+}
+
+/* --- Media Query for Smaller Screens --- */
+@media (max-width: 768px) {
+    .map-locations-wrapper {
+        flex-direction: column; /* Stack map and locations vertically */
+    }
+
+    #map {
+        min-height: 300px; /* Adjust map height */
+    }
+}
