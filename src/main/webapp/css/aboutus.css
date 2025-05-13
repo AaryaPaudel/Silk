@@ -5,13 +5,17 @@
     padding: 40px 20px;
     max-width: 900px;
     margin: 20px auto;
+    background: linear-gradient(to bottom, #54331A, #6E4A2A, #8B5A42, #A06A5A) !important; /* Darker Rich Brown Gradient */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
+    color: #f0f0f0;
 }
 
 .aboutus-container h1 {
     font-size: 2.8em;
-    color: #a0522d; /* Brown */
+    color: #f0e6d4; /* Beige */
     text-align: center;
     margin-bottom: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* --- About Section Styling --- */
@@ -19,17 +23,13 @@
     margin-bottom: 50px;
     padding: 40px;
     border-radius: 8px;
-    background-color: #fff; /* Default background */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.about-section.alt-background {
     background-color: #f0e6d4; /* Beige alternate background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .about-section h2 {
     font-size: 2em;
-    color: #a0522d; /* Brown */
+    color: #f0e6d4; /* Beige */
     margin-bottom: 20px;
     text-align: center; /* Center section titles */
 }

@@ -15,6 +15,7 @@ import com.silk.model.UserModelData;
 import com.silk.service.RegisterService;
 import com.silk.util.ImageUtil;
 import com.silk.util.Password;
+import com.silk.util.ValidationUtil;
 
 @WebServlet("/register")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
@@ -30,100 +31,220 @@ public class RegisterController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String firstName = request.getParameter("firstName");
-//        String lastName = request.getParameter("lastName");
-//        String birthDate = request.getParameter("birthDate");
-//        String phonenumber = request.getParameter("phonenumber");
-//        String address = request.getParameter("address");
-//        String email = request.getParameter("email");
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
-//        String imageUrl = request.getParameter("imageUrl");
-//
-//        System.out.println(birthDate);
-//        System.out.println(firstName);
-//        System.out.println(username);
-//
-//        UserModelData user = extractUserModelData(request);
-//        user.setfirstName(firstName);
-//        user.setlastName(lastName);
-//        user.setbirthDate(LocalDate.parse(birthDate));
-//        user.setphonenumber(phonenumber);
-//        user.setaddress(address);
-//        user.setemail(email);
-//        user.setusername(username);
-//        user.setpassword(password);
-//        user.setimageUrl(imageUrl);
-//
-//        RegisterService registerService = new RegisterService();
-//        Boolean registered = registerService.addUser(user);
-//
-//
-//        if (registered != null && registered) {
-//            response.sendRedirect(request.getContextPath() + "/login");
-//        } else {
-//            // Handle registration failure
-//            response.getWriter().println("Registration failed. Please try again.");
-//        }
-    	
-    	try {
-			UserModelData userModel = extractUserModelData(request);
-			Boolean isAdded = registerService.addUser(userModel);
+        try {
+            // Extract user data from the request
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String birthDateStr = request.getParameter("birthDate");
+            String phonenumber = request.getParameter("phonenumber");
+            String address = request.getParameter("address");
+            String email = request.getParameter("email");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+			Part image = request.getPart("image");
+			
 
-			if (isAdded == null){
-				handleError(request, response, "Our server is under maintenance. Please try again later!");
+            // Validate the extracted data
+            if (ValidationUtil.isNullOrEmpty(firstName)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "First name cannot be empty.");
+                return;
+            }
+            if (ValidationUtil.isNullOrEmpty(lastName)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Last name cannot be empty.");
+                return;
+            }
+            if (ValidationUtil.isNullOrEmpty(birthDateStr)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Birth date cannot be empty.");
+                return;
+            }
+            LocalDate birthDate = LocalDate.parse(birthDateStr);
+            if (!ValidationUtil.isAgeAtLeast16(birthDate)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "You must be at least 16 years old to register.");
+                return;
+            }
+            if (ValidationUtil.isNullOrEmpty(phonenumber)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Phone number cannot be empty.");
+                return;
+            }
+            if (!ValidationUtil.isValidPhoneNumber(phonenumber)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Invalid phone number. Please enter a 10-digit number starting with 98.");
+                return;
+            }
+            if (ValidationUtil.isNullOrEmpty(address)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Address cannot be empty.");
+                return;
+            }
+            if (ValidationUtil.isNullOrEmpty(email)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Email cannot be empty.");
+                return;
+            }
+            if (!ValidationUtil.isValidEmail(email)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Invalid email address.");
+                return;
+            }
+            if (ValidationUtil.isNullOrEmpty(username)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Username cannot be empty.");
+                return;
+            }
+            if (ValidationUtil.isNullOrEmpty(password)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Password cannot be empty.");
+                return;
+            }
+            if (!ValidationUtil.isValidPassword(password)) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Password must contain at least 8 characters, 1 capital letter, 1 number, and 1 symbol.");
+                return;
+            }
 
-			} else if(!isAdded){
-				handleError(request, response, "Could not register your account. Please try again later!");
-			}else {
-			//Upon successful registration
-			response.sendRedirect(request.getContextPath() + "/login");
-			}
-		} catch (Exception e) {
-			handleError(request, response, "An unexpected error occurred. Please try again later!");
-			e.printStackTrace(); // Log the exception
-		}
+            Boolean isUsernameTaken = registerService.isUsernameTaken(username);
+            if (isUsernameTaken == null) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Our server is under maintenance. Please try again later!");
+                return;
+            }
+            if (isUsernameTaken) {
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("birthDate", birthDateStr);
+                request.setAttribute("phonenumber", phonenumber);
+                request.setAttribute("address", address);
+                request.setAttribute("email", email);
+                request.setAttribute("username", username);
+                handleError(request, response, "Username already taken. Please choose a different username.");
+                return;
+            }
+
+            String imageUrl = imageUtil.getImageNameFromPart(image);
+
+            password = Password.encrypt(username, password);
+
+            // Create a UserModelData object
+            UserModelData userModel = new UserModelData(
+                    firstName, lastName, birthDate, phonenumber,
+                    address, email, username, password, imageUrl
+            );
+
+            // Add the user to the database
+            Boolean isAdded = registerService.addUser(userModel);
+
+            if (isAdded == null) {
+                handleError(request, response, "Our server is under maintenance. Please try again later!");
+            } else if (!isAdded) {
+                handleError(request, response, "Could not register your account. Please try again later!");
+            } else {
+                // Upon successful registration
+            	response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
+        } catch (Exception e) {
+            handleError(request, response, "An unexpected error occurred. Please try again later!");
+            e.printStackTrace(); // Log the exception
+        }
     }
-    
-    private UserModelData extractUserModelData(HttpServletRequest req) throws Exception {
-    	int user_id = Integer.parseInt(req.getParameter("user_id"));
-		String firstName = req.getParameter("user_id");
-		String lastName = req.getParameter("lastName");
-		LocalDate birthDate = LocalDate.parse(req.getParameter("birthDate"));
-		String phonenumber = req.getParameter("phonenumber");
-		String address = req.getParameter("address");
-		String email = req.getParameter("email");
-		String username = req.getParameter("username");
-		//String role = "user";
 
-		String password = req.getParameter("password");
-		
-
-		
-		password = Password.encrypt(username, password);
-		
-		Part image = req.getPart("image");
-		String imageUrl = imageUtil.getImageNameFromPart(image);
-		
-		return new UserModelData( user_id,  firstName,  lastName,  birthDate,  phonenumber,
-				 address,  email,  username,  password, imageUrl);	
-		} 
-	
 	private boolean uploadImage(HttpServletRequest req) throws IOException, ServletException {
 		Part image = req.getPart("image");
 		return imageUtil.uploadImage(image, req.getServletContext().getRealPath("/"), "user");
 	}
 	
-		
-	private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
-			throws ServletException, IOException {
-		req.setAttribute("success", message);
-		req.getRequestDispatcher(redirectPage).forward(req, resp);
-	}
-	
-	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
-			throws ServletException, IOException {
-		req.setAttribute("error", message);
-		req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
-	}
+    private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
+            throws ServletException, IOException {
+        req.setAttribute("success", message);
+        req.getRequestDispatcher(redirectPage).forward(req, resp);
+    }
+
+    private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
+            throws ServletException, IOException {
+        req.setAttribute("error", message);
+        req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
+    }
 }

@@ -60,4 +60,38 @@ public class RegisterService {
 			return null;
 		}
 	}
+
+	public Boolean isUsernameTaken(String username) {
+        if (dbConn == null) {
+            System.err.println("Database connection is not available.");
+            return null;
+        }
+        PreparedStatement preparedStatement = null;
+        java.sql.ResultSet resultSet = null;
+
+        try {
+            String query = "SELECT username FROM user WHERE username = ?";
+            preparedStatement = dbConn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            return resultSet.next(); // If a row is found, the username is taken
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; // Indicate a database error
+        } finally {
+            // Close resources in a finally block to ensure they are always closed
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

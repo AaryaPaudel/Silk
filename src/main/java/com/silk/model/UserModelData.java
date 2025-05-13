@@ -16,10 +16,9 @@ public class UserModelData {
 	
 	public UserModelData() {}
 
-	public UserModelData(int user_id, String firstName, String lastName, LocalDate birthDate, String phonenumber,
+	public UserModelData(String firstName, String lastName, LocalDate birthDate, String phonenumber,
 			String address, String email, String username, String password, String imageUrl) {
 		super();
-		this.user_id = user_id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthDate = birthDate;

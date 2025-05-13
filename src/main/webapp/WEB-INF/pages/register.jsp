@@ -11,34 +11,40 @@
     <div class="container">
         <div class="register-section">
             <h2>Welcome to the Silk Family!</h2>
+            <% String error = (String) request.getAttribute("error"); %>
+			<% if (error != null) { %>
+			    <div class="error-message">
+			        <p style="color:red;"><%= error %></p>
+			    </div>
+			<% } %>
             <form action="${pageContext.request.contextPath}/register" method="post" enctype = "multipart/form-data">
                 <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" required>
+                    <input type="text" id="firstName" name="firstName" value="${firstName}" required>
                 </div>
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" required>
+                    <input type="text" id="lastName" name="lastName" value="${lastName}" required>
                 </div>
                 <div class="form-group">
                     <label for="birthDate">Birth Date</label>
-                    <input type="date" id="birthDate" name="birthDate" required>
+                    <input type="date" id="birthDate" name="birthDate" value="${birthDate}" required>
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber">Phone Number</label>
-                    <input type="tel" id="phoneNumber" name="phonenumber" required>
+                    <input type="tel" id="phoneNumber" name="phonenumber" value="${phonenumber}" required>
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" id="address" name="address" required>
+                    <input type="text" id="address" name="address" value="${address}" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" value="${email}" required>
                 </div>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="username" value="${username}" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>

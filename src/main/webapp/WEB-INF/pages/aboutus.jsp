@@ -12,7 +12,7 @@
     <%-- Navigation Bar (copied from menu.jsp for consistency) --%>
     <nav>
         <div class="logo">
-            <img src="${pageContext.request.contextPath}/resources/photos/SilkLogo.png" alt="Silk Logo"/>
+            <img src="${pageContext.request.contextPath}/resources/images/SilkLogo.png" alt="Silk Logo"/>
         </div>
         <div class="pages">
             <a href="${pageContext.request.contextPath}/home">Home</a>
@@ -23,10 +23,13 @@
         <div class="login">
             <button onclick="location.href='login.jsp'">Login</button>
         </div>
-        <%-- Cart Icon --%>
-        <div class="cart-icon">
-             <a href="${pageContext.request.contextPath}/cart.jsp">🛒 <span id="cart-count">0</span></a> <%-- TODO: Update count dynamically --%>
-        </div>
+        <c:if test="${not empty sessionScope.user}">
+            <div class="profile-icon">
+                <a href="${pageContext.request.contextPath}/userprofile">
+                    <img src="${pageContext.request.contextPath}/resources/images/${sessionScope.user.imageUrl}" alt="User Profile" style="width:50px;height:50px;">
+                </a>
+            </div>
+        </c:if>
     </nav>
 
     <main class="aboutus-container">

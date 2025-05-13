@@ -1,0 +1,488 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5dc; /* Beige */
+}
+
+nav {
+    background-color: #d2b48c; /* Light Brown */
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px; /* Same height as orders page */
+}
+
+nav > .logo > img {
+    height: 100px !important;
+    width: auto;
+    display: block;
+}
+
+nav .pages a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav .login button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.menu-list {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-list table {
+    width: 100%;
+    border-collapse: separate; /* Use 'separate' for spacing */
+    border-spacing: 0 10px; /* Add vertical spacing between rows */
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+.menu-list th,
+.menu-list td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: none; /* Remove the original border */
+    border: 1px solid #ddd; /* Add a border to each cell */
+}
+
+.menu-list th {
+    background-color: #d2b48c; /* Light Brown */
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.menu-list tbody tr {
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Optional: subtle shadow for each row */
+}
+
+.menu-list tbody tr:hover {
+    background-color: #e9e9e9;
+}
+
+/* Style for the Actions column */
+.menu-list td:first-child {
+    text-align: center; /* Center the buttons */
+    width: 100px; /* Adjust width as needed */
+}
+
+.menu-list .edit-button,
+.menu-list .delete-button {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    text-decoration: none;
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border-radius: 5px;
+    border: none; /* Remove default button border */
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Optional: button shadow */
+    transition: background-color 0.2s ease; /* Smooth transition for hover */
+}
+
+.menu-list .edit-button:hover,
+.menu-list .delete-button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* General button style (for "Add New Ice Cream" etc.) */
+.menu-list button {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: #a0522d; /* Brown */
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin: 0 auto; /* Center the button */
+    display: block; /* Make it a block element */
+    width: 200px; /* Set a specific width */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Optional: button shadow */
+    transition: background-color 0.2s ease; /* Smooth transition for hover */
+}
+
+.menu-list button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Style for the menu buttons container */
+.menu-buttons {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+    align-items: center; /* Vertically align buttons */
+    margin-top: 20px; /* Add some space above the buttons */
+}
+
+/* Style for the individual menu buttons */
+.menu-buttons button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size as needed */
+    transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+
+.menu-buttons button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Specific style for the "Add New Ice Cream" button to align left */
+#addNewIceCreamButton {
+    margin-right: auto; /* Push to the left */
+}
+
+/* Specific style for the "Edit Menu" and "Delete Menu" buttons to align right */
+#editMenuButton,
+#deleteMenuButton {
+    margin-left: 10px; /* Add some spacing between the buttons */
+}
+
+/* Add form style */
+.add-form {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    color: #333;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-form label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.add-form input[type="text"],
+.add-form input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-form .submit-button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.add-form .submit-button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+.add-form {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    color: #333;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.add-form label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.add-form input[type="text"],
+.add-form input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+}
+
+.add-form .submit-button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-form .submit-button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+.menu-list button {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: #a0522d; /* Brown */
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin: 0 auto; /* Center the button */
+    display: block; /* Make it a block element */
+    width: 200px; /* Set a specific width */
+}
+
+.menu-list button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Style for the menu buttons container */
+.menu-buttons {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+    align-items: center; /* Vertically align buttons */
+    margin-top: 20px; /* Add some space above the buttons */
+}
+
+/* Style for the individual menu buttons */
+.menu-buttons button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size as needed */
+    transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+
+.menu-buttons button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Specific style for the "Add New Ice Cream" button to align left */
+#addNewIceCreamButton {
+    margin-right: auto; /* Push to the left */
+}
+
+/* Specific style for the "Edit Menu" and "Delete Menu" buttons to align right */
+#editMenuButton,
+#deleteMenuButton {
+    margin-left: 10px; /* Add some spacing between the buttons */
+}
+
+/* Style for the menu buttons container */
+.menu-buttons {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+    align-items: center; /* Vertically align buttons */
+    margin-top: 20px; /* Add some space above the buttons */
+}
+
+/* Style for the individual menu buttons */
+.menu-buttons button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size as needed */
+    transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+
+.menu-buttons button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Specific style for the "Add New Ice Cream" button to align left */
+#addNewIceCreamButton {
+    margin-right: auto; /* Push to the left */
+}
+
+/* Specific style for the "Edit Menu" and "Delete Menu" buttons to align right */
+#editMenuButton,
+#deleteMenuButton {
+    margin-left: 10px; /* Add some spacing between the buttons */
+}
+
+/* Style for the menu buttons container */
+.menu-buttons {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+    align-items: center; /* Vertically align buttons */
+    margin-top: 20px; /* Add some space above the buttons */
+}
+
+/* Style for the individual menu buttons */
+.menu-buttons button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size as needed */
+    transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+
+.menu-buttons button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Specific style for the "Add New Ice Cream" button to align left */
+#addNewIceCreamButton {
+    margin-right: auto; /* Push to the left */
+}
+
+/* Specific style for the "Edit Menu" and "Delete Menu" buttons to align right */
+#editMenuButton,
+#deleteMenuButton {
+    margin-left: 10px; /* Add some spacing between the buttons */
+}
+
+/* Add form style */
+.add-form {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    color: #333;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-form label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.add-form input[type="text"],
+.add-form input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.add-form .submit-button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.add-form .submit-button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+.add-form {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    color: #333;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.add-form label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.add-form input[type="text"],
+.add-form input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+}
+
+.add-form .submit-button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-form .submit-button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+.menu-list button {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: #a0522d; /* Brown */
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin: 0 auto; /* Center the button */
+    display: block; /* Make it a block element */
+    width: 200px; /* Set a specific width */
+}
+
+.menu-list button:hover {
+    background-color: #5d4037; /* Dark Brown */
+}

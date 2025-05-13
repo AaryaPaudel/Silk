@@ -3,6 +3,8 @@ package com.silk.util;
 import java.io.File;
 import java.io.IOException;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 
 /**
@@ -96,6 +98,18 @@ public class ImageUtil {
 	}
 	
 	public String getSavePath(String saveFolder) {
-		return "C:/Users/Prithivi/eclipse-workspace/islington-student/src/main/webapp/resources/images/"+saveFolder+"/";
+		return "C:/Users/Aarya/eclipse-workspace/silk/src/main/webapp/resources/images/"+saveFolder+"/";
 	}
+
+    public static String handleFileUpload(Part imagePart, HttpServletRequest request) throws IOException, ServletException {
+        String fileName = imagePart.getSubmittedFileName();
+        String uploadDir = request.getServletContext().getRealPath("/resources/images");
+        File uploadPath = new File(uploadDir);
+        if (!uploadPath.exists()) {
+            uploadPath.mkdirs();
+        }
+        String filePath = uploadDir + File.separator + fileName;
+        imagePart.write(filePath);
+        return fileName;
+    }
 }

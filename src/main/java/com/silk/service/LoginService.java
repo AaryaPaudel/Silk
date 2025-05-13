@@ -31,6 +31,33 @@ public class LoginService {
 		}
 	}
 
+	public UserModelData getUserDetails(String username) {
+	    UserModelData user = null;
+	    try (Connection conn = DbConfig.getDbConnection();
+	         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM User WHERE username = ?")) {
+	        
+	        stmt.setString(1, username);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            user = new UserModelData();
+	            user.setfirstName(rs.getString("firstName"));
+	            user.setlastName(rs.getString("lastName"));
+	            user.setbirthDate(rs.getDate("birthDate").toLocalDate());
+	            user.setphonenumber(rs.getString("phonenumber"));
+	            user.setaddress(rs.getString("address"));
+	            user.setusername(rs.getString("username"));
+	            user.setemail(rs.getString("email"));
+	            user.setimageUrl(rs.getString("imageUrl"));
+	        }
+	        
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }
+	    return user;
+	}
+	
+	
 	/**
 	 * Validates the user credentials against the database records.
 	 *
@@ -46,32 +73,43 @@ public class LoginService {
 
 		String query = "SELECT username, password FROM user WHERE username = ?";
 		try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
-			stmt.setString(1, userModelData.getusername());  
+			stmt.setString(1, userModelData.getusername());
 			ResultSet result = stmt.executeQuery();
 
-			if (result.next()) {
-				// Get the encrypted password from the database
-				String dbEncryptedPassword = result.getString("password");
-
-				// Decrypt the password from the database using the Password utility
-				String decryptedPassword = Password.decrypt(dbEncryptedPassword, userModelData.getusername());
-
-				// Check if the decrypted password matches the user input password
-				if (decryptedPassword != null && decryptedPassword.equals(userModelData.getpassword())) {
-					// Password matches, login successful
-					return true;
-				} else {
-					// Password mismatch
-					return true;
-				}
+			if (!result.next()) {
+				// User not found
+				return null;
+			} 
+			
+			boolean isValidPassword = validatePassword(result, userModelData);
+			if(!isValidPassword) {
+				return false;
+			}
+			else {
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-
-		// User not found
-		return false;
 	}
+
+
+	/**
+	 * Validates the password retrieved from the database. 
+	 *
+	 * @param result       the ResultSet containing the username and password from
+	 *                     the database
+	 * @param studentModel the StudentModel object containing user credentials
+	 * @return true if the passwords match, false otherwise
+	 * @throws SQLException if a database access error occurs
+	 */
+	private boolean validatePassword(ResultSet result, UserModelData userModel) throws SQLException {
+		String dbUsername = result.getString("userName");
+		String dbPassword = result.getString("password");
+		return dbUsername.equals(userModel.getusername())
+				&& Password.decrypt(dbPassword, dbUsername).equals(userModel.getpassword());
+	}
+
 
 }

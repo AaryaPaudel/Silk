@@ -1,9 +1,9 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8;
-    color: #333;
+    background-color: #f5f5f5;
+    color: #444;
 }
 
 nav {
@@ -38,64 +38,105 @@ nav .login button {
 /* --- Cart Icon --- */
 nav .cart-icon {
     position: relative; /* For potential badge positioning */
-    margin-left: 15px; /* Space from login button */
+    margin-left: 5px; /* Space from login button */
+	margin-right: 5px;
 }
 
-nav .cart-icon a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.5em; /* Make icon slightly larger */
-}
-
-nav .cart-icon #cart-count {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 0.7em;
-    font-weight: bold;
-    min-width: 10px; /* Ensure circle shape for single digit */
-    text-align: center;
-    line-height: 1;
+/* --- Profile Icon --- */
+nav .profile-icon {
+    position: relative; /* For potential badge positioning */
+    margin-left: 5px; /* Space from cart button */
+	margin-right: 5px;
 }
 
 
 .hero {
-    background-color: #f0e6d4; /* Beige */
-    padding: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: linear-gradient(to bottom, #54331A, #6E4A2A, #8B5A42, #A06A5A) !important; /* Darker Rich Brown Gradient */
+    padding: 50px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important; /* 3D effect */
+    position: relative !important; /* For shine effect */
+    overflow: hidden !important; /* Hide overflow from shine */
+}
+
+/* Shine effect */
+.hero::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 200% !important;
+    height: 100% !important;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%) !important;
+    animation: shine 3s infinite !important;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    60% {
+        left: 100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 .hero .hero-image img {
-    max-width: 400px;
-    border-radius: 10px;
+    max-width: 400px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important; /* 3D effect */
 }
 
 .hero .hero-text {
-    padding: 20px;
+    padding: 20px !important;
 }
 
 .hero .hero-text h1 {
-    font-size: 2.5em;
-    color: #a0522d; /* Brown */
+    font-size: 3.0em !important;
+    color: #fff !important; /* White */
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7) !important; /* Darker shadow */
 }
 
 .hero .hero-text p {
-    font-size: 1.2em;
-    color: #555;
+    font-size: 1.4em !important;
+    color: #f0f0f0 !important; /* Lighter Gray */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7) !important; /* Darker shadow */
 }
 
 .hero .hero-text button {
-    background-color: #a0522d; /* Brown */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+    background-color: #a0522d !important; /* Brown */
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    cursor: pointer !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.hero .hero-text button:hover {
+    background-color: #8b4513 !important; /* Darker Brown */
+    transform: translateY(-3px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.hero .hero-text button::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%) !important;
+    transition: all 0.4s ease !important;
+}
+
+.hero .hero-text button:hover::before {
+    left: 100% !important;
 }
 
 .top-flavors {
@@ -121,17 +162,20 @@ nav .cart-icon #cart-count {
 .top-flavors .flavors .flavor img {
     max-width: 100%;
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 3D effect */
 }
 
 .why-no-delivery {
     background-color: #f0e6d4; /* Beige */
     padding: 50px;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 3D effect */
 }
 
 .options {
     padding: 50px;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 3D effect */
 }
 
 footer {
@@ -140,13 +184,16 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 3D effect */
 }
 
 footer .social-media img {
     height: 30px;
     margin: 0 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* 3D effect */
 }
 
 footer .copyright {
     text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* 3D effect */
 }

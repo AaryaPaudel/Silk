@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,12 @@
     <div class="container">
         <div class="login-section">
             <h2>Welcome Back!</h2>
+            <% String error = (String) request.getAttribute("error"); %>
+			<% if (error != null) { %>
+			    <div class="error-message">
+			        <p style="color:red;"><%= error %></p>
+			    </div>
+			<% } %>
             <form action="${pageContext.request.contextPath}/login" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>

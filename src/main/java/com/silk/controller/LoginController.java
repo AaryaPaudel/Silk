@@ -63,12 +63,14 @@ public class LoginController extends HttpServlet {
 
 		if (loginStatus != null && loginStatus) {
 			SessionUtil.setAttribute(req, "username", username);
-			if (username.equals("admin")) {
+			SessionUtil.setAttribute(req, "user", UserModel);
+
+			if (username.equals("AaryaPaudel")) {
 				CookiesUtil.addCookie(resp, "role", "admin", 60 * 30);
-				resp.sendRedirect(req.getContextPath() + "/home"); // Redirect to /home
+				resp.sendRedirect(req.getContextPath() + "/dashboard");
 			} else {
 				CookiesUtil.addCookie(resp, "role", "customer", 60 * 30);
-				resp.sendRedirect(req.getContextPath() + "/home"); // Redirect to /home
+				resp.sendRedirect(req.getContextPath() + "/home");
 			}
 		} else {
 			handleLoginFailure(req, resp, loginStatus);
@@ -89,11 +91,14 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 		String errorMessage;
 		if (loginStatus == null) {
-			errorMessage = "Our server is under maintenance. Please try again later!";
-		} else {
+			errorMessage = "User does not exist.";
+		} else if (loginStatus == false){
 			errorMessage = "User credential mismatch. Please try again!";
 		}
+		else {
+			errorMessage = "Our server is under maintenance. Please try again later!";
+		}
 		req.setAttribute("error", errorMessage);
-		req.getRequestDispatcher(RedirectionUtil.loginUrl).forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
 	}
 }

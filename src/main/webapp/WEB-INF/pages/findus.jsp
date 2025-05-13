@@ -14,7 +14,7 @@
     <%-- Navigation Bar (copied from menu.jsp for consistency) --%>
     <nav>
         <div class="logo">
-            <img src="${pageContext.request.contextPath}/resources/photos/SilkLogo.png" alt="Silk Logo"/>
+            <img src="${pageContext.request.contextPath}/resources/images/SilkLogo.png" alt="Silk Logo"/>
         </div>
         <div class="pages">
             <a href="${pageContext.request.contextPath}/home">Home</a>
@@ -23,12 +23,15 @@
             <a href="${pageContext.request.contextPath}/about">About Us</a>
         </div>
         <div class="login">
-            <button onclick="location.href='login.jsp'">Login</button>
+            <button onclick="location.href='login.jsp'">Logout</button>
         </div>
-        <%-- Cart Icon --%>
-        <div class="cart-icon">
-             <a href="${pageContext.request.contextPath}/cart.jsp">🛒 <span id="cart-count">0</span></a> <%-- TODO: Update count dynamically --%>
-        </div>
+        <c:if test="${not empty sessionScope.user}">
+            <div class="profile-icon">
+                <a href="${pageContext.request.contextPath}/userprofile">
+                    <img src="${pageContext.request.contextPath}/resources/images/${sessionScope.user.imageUrl}" alt="User Profile" style="width:50px;height:50px;">
+                </a>
+            </div>
+        </c:if>
     </nav>
 
     <main class="findus-container">
@@ -39,7 +42,7 @@
             <%-- Map Placeholder --%>
             <div id="map">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.245135751973!2d85.31569587429787!3d27.71724527606471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19a6e37b39ad%3A0xbb7458c463b5dd4f!2sKathmandu%20Guest%20House!5e0!3m2!1sen!2snp!4v1713684294214!5m2!1sen!2snp"
-                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        width="95%" height="900" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
 

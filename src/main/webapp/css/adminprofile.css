@@ -1,0 +1,414 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+nav {
+    background-color: #d2b48c; /* Light Brown */
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav > .logo > img { /* Increased specificity */
+    height: 100px !important; /* Increased logo size */
+    width: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure it behaves as a block element */
+}
+
+nav .pages a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav .login button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* --- Cart Icon --- */
+nav .cart-icon {
+    position: relative; /* For potential badge positioning */
+    margin-left: 15px; /* Space from login button */
+}
+
+nav .cart-icon a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em; /* Make icon slightly larger */
+}
+
+nav .cart-icon #cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7em;
+    font-weight: bold;
+    min-width: 10px; /* Ensure circle shape for single digit */
+    text-align: center;
+    line-height: 1;
+}
+
+main {
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.kpi {
+    background-color: #f0e6d4; /* Beige */
+    border: 1px solid #d2b48c; /* Light Brown */
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    width: 200px;
+}
+
+.kpi h3 {
+    color: #a0522d; /* Brown */
+}
+
+/* Profile Section Styling */
+.profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 5px solid #f0e6d4; /* Beige border */
+}
+
+.profile-details p {
+    margin: 8px 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.profile-details strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Edit Profile Section Styling */
+.edit-profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.edit-profile-section h2 {
+    margin-bottom: 20px;
+    color: #a0522d; /* Brown */
+    text-align: center;
+}
+
+.edit-profile-section label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.edit-profile-section input[type="text"],
+.edit-profile-section input[type="email"],
+.edit-profile-section input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.edit-profile-section input[type="submit"] {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+}
+
+.edit-profile-section input[type="submit"]:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Profile Section Styling */
+.profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 5px solid #f0e6d4; /* Beige border */
+}
+
+.profile-details p {
+    margin: 8px 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.profile-details strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Edit Profile Section Styling */
+.edit-profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.edit-profile-section h2 {
+    margin-bottom: 20px;
+    color: #a0522d; /* Brown */
+    text-align: center;
+}
+
+.edit-profile-section label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.edit-profile-section input[type="text"],
+.edit-profile-section input[type="email"],
+.edit-profile-section input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.edit-profile-section input[type="submit"] {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+}
+
+.edit-profile-section input[type="submit"]:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Profile Section Styling */
+.profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 5px solid #f0e6d4; /* Beige border */
+}
+
+.profile-details p {
+    margin: 8px 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.profile-details strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Edit Profile Section Styling */
+.edit-profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.edit-profile-section h2 {
+    margin-bottom: 20px;
+    color: #a0522d; /* Brown */
+    text-align: center;
+}
+
+.edit-profile-section label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.edit-profile-section input[type="text"],
+.edit-profile-section input[type="email"],
+.edit-profile-section input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.edit-profile-section input[type="submit"] {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+}
+
+.edit-profile-section input[type="submit"]:hover {
+    background-color: #5d4037; /* Dark Brown */
+}
+
+/* Profile Section Styling */
+.profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 5px solid #f0e6d4; /* Beige border */
+}
+
+.profile-details p {
+    margin: 8px 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.profile-details strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Edit Profile Section Styling */
+.edit-profile-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.edit-profile-section h2 {
+    margin-bottom: 20px;
+    color: #a0522d; /* Brown */
+    text-align: center;
+}
+
+.edit-profile-section label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.edit-profile-section input[type="text"],
+.edit-profile-section input[type="email"],
+.edit-profile-section input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.edit-profile-section input[type="submit"] {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 20px auto 0;
+}
+
+.edit-profile-section input[type="submit"]:hover {
+    background-color: #5d4037; /* Dark Brown */
+}

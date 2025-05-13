@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.order-metrics {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+}
+
+.order-metrics .metric {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 10px; /* Add spacing between metrics */
+}
+
+.order-metrics .metric span {
+    font-weight: bold;
+    color: #5cb85c;
+    margin-left: 5px; /* Add spacing between text and value */
+}
+
+.order-filters {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-filters input[type="text"],
+.order-filters select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.order-list {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-list th, .order-list td {
+    padding: 15px 20px; /* Increased padding */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-list th {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.order-list tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+.pagination a.active {
+    background-color: #5cb85c;
+    color: white;
+    border: 1px solid #5cb85c;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
