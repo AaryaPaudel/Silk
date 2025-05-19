@@ -1,3 +1,4 @@
+// src/main/java/com/silk/controller/UserProfileController.java
 package com.silk.controller;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import jakarta.servlet.RequestDispatcher;
 import com.silk.model.UserModelData;
 import com.silk.service.LoginService;
 import com.silk.service.RegisterService;
+import com.silk.service.UserProfileService; // Import the new UserService
 import com.silk.util.ValidationUtil;
 import com.silk.util.ImageUtil;
 
@@ -22,25 +24,26 @@ import com.silk.util.ImageUtil;
 @MultipartConfig
 public class UserProfileController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private final UserProfileService userService = new UserProfileService(); // Instantiate UserService
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	String username = (String) request.getSession().getAttribute("username"); // Get from session
+        String username = (String) request.getSession().getAttribute("username"); // Get from session
 
         if (username != null) {
             LoginService loginService = new LoginService();
             UserModelData user = loginService.getUserDetails(username);
-			if (user != null) {
-			    request.setAttribute("user", user); // Passing user data to JSP
-			    System.out.println("User fetched: " + user.getusername());
-			} else {
-			    request.setAttribute("error", "User not found!");
-			}
+            if (user != null) {
+                request.setAttribute("user", user); // Passing user data to JSP
+                System.out.println("User fetched: " + user.getusername());
+            } else {
+                request.setAttribute("error", "User not found!");
+            }
         } else {
             request.setAttribute("error", "No user logged in!");
         }
-        
-        request.getRequestDispatcher("WEB-INF/pages/userprofile.jsp").forward(request, response);  
+
+        request.getRequestDispatcher("WEB-INF/pages/userprofile.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -86,55 +89,62 @@ public class UserProfileController extends HttpServlet {
             } else if (ValidationUtil.isNullOrEmpty(username)) {
                 error = "Username cannot be empty.";
             } else {
-            	RegisterService registerService = new RegisterService();
-            	if(registerService.isUsernameTaken(username) && !username.equals(user.getusername())) {
-            		error = "Username already taken. Please choose a different username.";
-            	}
+                RegisterService registerService = new RegisterService();
+                if(registerService.isUsernameTaken(username) && !username.equals(user.getusername())) {
+                    error = "Username already taken. Please choose a different username.";
+                }
             }
 
             if (error != null) {
-                request.setAttribute("firstName", firstName);
-                request.setAttribute("lastName", lastName);
-                request.setAttribute("birthDateStr", birthDateStr);
-                request.setAttribute("phonenumber", phonenumber);
-                request.setAttribute("address", address);
-                request.setAttribute("email", email);
-                request.setAttribute("username", username);
                 request.setAttribute("error", error);
-            }
-            else {
+                    request.setAttribute("user", user);
+                // Forward back to the user profile page to display the error within the form
+                request.getRequestDispatcher("/WEB-INF/pages/userprofile.jsp").forward(request, response);
+                return; // Stay on the form
+            } else {
+                user.setfirstName(firstName);
+                user.setlastName(lastName);
+                user.setbirthDate(birthDate);
+                user.setphonenumber(phonenumber);
+                user.setaddress(address);
+                user.setemail(email);
+                user.setusername(username);
+                 Part imagePart = request.getPart("image");
+                 if (imagePart != null && imagePart.getSize() > 0) {
+                     try {
+                         String fileName = ImageUtil.handleFileUpload(imagePart, request);
+                         user.setimageUrl(fileName);
+                     } catch (Exception e) {
+                         request.setAttribute("error", "Error uploading image: " + e.getMessage());
+                         request.getRequestDispatcher("/WEB-INF/pages/userprofile.jsp").forward(request, response);
+                         return;
+                     }
+                 }
 
-                    user.setfirstName(firstName);
-                    user.setlastName(lastName);
-                    user.setbirthDate(birthDate);
-                    user.setphonenumber(phonenumber);
-                    user.setaddress(address);
-                    user.setemail(email);
-                    user.setusername(username);
-
-                    Part imagePart = request.getPart("image");
-                    if (imagePart != null && imagePart.getSize() > 0) {
-                        try {
-                            String fileName = ImageUtil.handleFileUpload(imagePart, request);
-                            user.setimageUrl(fileName);
-                        } catch (Exception e) {
-                            request.setAttribute("error", "Error uploading image: " + e.getMessage());
-                        }
-                    }
-
-                    session.setAttribute("user", user);
+                // Update the user information in the database using the UserService
+                if (userService.updateUser(user)) {
+                    session.setAttribute("user", user); // Update the session as well
                     request.setAttribute("message", "Profile updated successfully!");
+                    // Fetch the updated user details to ensure consistency
                     LoginService loginService = new LoginService();
                     UserModelData updatedUser = loginService.getUserDetails(username);
                     request.setAttribute("user", updatedUser);
-                    response.sendRedirect(request.getContextPath() + "/userprofile");
+                    // Redirect to the user profile page to show the updated data and success message
+                    //response.sendRedirect(request.getContextPath() + "/userprofile?updated=true");
+                        request.getRequestDispatcher("/WEB-INF/pages/userprofile.jsp").forward(request, response);
                     return;
+                } else {
+                    // Set an error attribute to be displayed in the form
+                    request.setAttribute("updateError", "Failed to update profile.");
+                    request.setAttribute("user", user);
+                    // Forward back to the user profile page to display the error within the form
+                    request.getRequestDispatcher("/WEB-INF/pages/userprofile.jsp").forward(request, response);
+                    return; // Stay on the form
                 }
+            }
         } else {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/userprofile.jsp");
-    dispatcher.forward(request, response);
     }
 }

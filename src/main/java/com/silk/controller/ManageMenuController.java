@@ -5,125 +5,205 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import com.silk.model.IceCreamModel;
 import com.silk.service.ManageMenuService;
 
-
-/**
- * Servlet implementation class ManageMenuController
- */
 @WebServlet("/managemenu")
 public class ManageMenuController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
-    // In-memory store for ice creams. Replace with database logic in a real app.
-    private List<IceCreamModel> iceCreamList = new ArrayList<>();
-    private AtomicInteger idCounter = new AtomicInteger(1); // For generating unique IDs
+    private ManageMenuService service;
 
-    public ManageMenuController() {
-        super();
-        // Initialize with some dummy data (optional)
-        // iceCreamList.add(new IceCreamModel(idCounter.getAndIncrement(), "Vanilla", 2.50, "Classic", "Classic Vanilla", "Available"));
-        // iceCreamList.add(new IceCreamModel(idCounter.getAndIncrement(), "Chocolate", 3.00, "Classic", "Rich Chocolate", "Available"));
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ManageMenuService service = new ManageMenuService();
-        // Just display all ice creams from DB
-        List<IceCreamModel> currentIceCreams = service.getAllIceCreams();
-        request.setAttribute("iceCreams", currentIceCreams);
-        request.getRequestDispatcher("/WEB-INF/pages/managemenu.jsp").forward(request, response);
-    }
-
-
-    
-    private String manuallyBuildJsonResponse(List<IceCreamModel> list) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"iceCreams\":[");
-        for (int i = 0; i < list.size(); i++) {
-            IceCreamModel ic = list.get(i);
-            sb.append("{");
-            // Assuming standard Java Bean getter names based on previous corrections
-            sb.append("\"icecream_Id\":").append(ic.geticecream_Id()).append(",");
-            sb.append("\"iceCream_Name\":\"").append(ic.geticeCream_Name()).append("\",");
-            sb.append("\"iceCream_Price\":").append(ic.geticeCream_Price()).append(",");
-            sb.append("\"iceCream_Type\":\"").append(ic.geticeCream_Type()).append("\",");
-            sb.append("\"iceCream_Desc\":\"").append(ic.geticeCream_Desc()).append("\",");
-            sb.append("\"iceCream_Availability\":\"").append(ic.geticeCream_Availability()).append("\"");
-            sb.append("}");
-            if (i < list.size() - 1) {
-                sb.append(",");
-            }
-        }
-        sb.append("]}");
-        return sb.toString();
-    }
-
-    private void handleAddRequest(HttpServletRequest request) {
-        String name = request.getParameter("name");
-        double price = Double.parseDouble(request.getParameter("price"));
-        String type = request.getParameter("type");
-        String description = request.getParameter("description");
-        String availability = request.getParameter("availability");
-        
-        // Assuming IceCreamModel has a constructor for data fields and a setter for ID
-        IceCreamModel newIceCream = new IceCreamModel(0, name, (int) price, type, description, availability);
-        newIceCream.seticecream_Id(idCounter.getAndIncrement()); // Assuming setIcecream_Id(int id) exists
-        iceCreamList.add(newIceCream);
-    }
-
-    private void handleEditRequest(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("iceCreamId"));
-        Optional<IceCreamModel> existingIceCreamOpt = iceCreamList.stream()
-                                                                .filter(ic -> ic.geticecream_Id() == id)
-                                                                .findFirst();
-        if (existingIceCreamOpt.isPresent()) {
-            IceCreamModel iceCreamToEdit = existingIceCreamOpt.get();
-            iceCreamToEdit.seticeCream_Name(request.getParameter("name"));
-            iceCreamToEdit.seticeCream_Price(Integer.parseInt(request.getParameter("price"))); // Corrected to Double
-            iceCreamToEdit.seticeCream_Type(request.getParameter("type"));
-            iceCreamToEdit.seticeCream_Desc(request.getParameter("description"));
-            iceCreamToEdit.seticeCream_Availability(request.getParameter("availability"));
-        }
-    }
-
-    private void handleDeleteRequest(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("iceCreamId"));
-        iceCreamList.removeIf(ic -> ic.geticecream_Id() == id);
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        service = new ManageMenuService();
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        ManageMenuService service = new ManageMenuService();
+        String searchTerm = request.getParameter("searchTerm");
+
+        if ("search".equals(action) && searchTerm != null && !searchTerm.isEmpty()) {
+            List<IceCreamModel> searchResults = service.searchIceCreams(searchTerm);
+            request.setAttribute("iceCreams", searchResults);
+            request.setAttribute("searchTerm", searchTerm); // Keep the search term for display
+            if (searchResults.isEmpty()) {
+                request.setAttribute("searchError", "Flavor not found.");
+            }
+            request.getRequestDispatcher("/WEB-INF/pages/managemenu.jsp").forward(request, response);
+            return;
+        } else if ("showAll".equals(action)) {
+            // Load all ice creams
+            List<IceCreamModel> iceCreams = service.getAllIceCreams();
+            request.setAttribute("iceCreams", iceCreams);
+            request.getRequestDispatcher("/WEB-INF/pages/managemenu.jsp").forward(request, response);
+            return;
+        } else if ("edit".equals(action)) {
+            String iceCreamIdStr = request.getParameter("iceCreamId");
+            if (iceCreamIdStr != null && !iceCreamIdStr.isEmpty()) {
+                try {
+                    int iceCreamId = Integer.parseInt(iceCreamIdStr);
+                    IceCreamModel iceCreamToEdit = service.getIceCreamById(iceCreamId);
+                    if (iceCreamToEdit != null) {
+                        request.setAttribute("iceCreamToEdit", iceCreamToEdit);
+                        request.setAttribute("iceCreams", service.getAllIceCreams()); // Still need the full list for the table
+                        request.getRequestDispatcher("/WEB-INF/pages/managemenu.jsp").forward(request, response);
+                        return; // Important to return after forwarding
+                    } else {
+                        request.setAttribute("error", "Ice cream not found with ID: " + iceCreamId);
+                    }
+                } catch (NumberFormatException e) {
+                    request.setAttribute("error", "Invalid ice cream ID format.");
+                }
+            } else {
+                request.setAttribute("error", "Ice cream ID is missing for edit action.");
+            }
+        }
+
+        // Default behavior: Load all ice creams for the table
+        List<IceCreamModel> iceCreams = service.getAllIceCreams();
+        request.setAttribute("iceCreams", iceCreams);
+        request.getRequestDispatcher("/WEB-INF/pages/managemenu.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            request.setAttribute("error", "No action specified.");
+            doGet(request, response);
+            return;
+        }
 
         switch (action) {
             case "add":
-                handleAddRequest(request);
+                handleAdd(request, response);
                 break;
             case "edit":
-                handleEditRequest(request);
+                handleEdit(request, response);
                 break;
             case "delete":
-                handleDeleteRequest(request);
+                handleDelete(request, response);
                 break;
             default:
-                break;
+                request.setAttribute("error", "Invalid action.");
+                doGet(request, response);
         }
-
-        // After performing the action, fetch updated list and respond as JSON
-        List<IceCreamModel> updatedList = service.getAllIceCreams();  // Replace with DB logic if needed
-        response.setContentType("application/json");
-        response.getWriter().write(manuallyBuildJsonResponse(updatedList));
     }
 
-    // Removed IceCreamResponse helper class as JSON is built manually
+    private void handleAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String priceStr = request.getParameter("price");
+        String type = request.getParameter("type");
+        String description = request.getParameter("description");
+        String availability = request.getParameter("availability");
+
+        if (name == null || priceStr == null || type == null || description == null || availability == null ||
+            name.isEmpty() || priceStr.isEmpty() || type.isEmpty() || description.isEmpty() || availability.isEmpty()) {
+            request.setAttribute("error", "All fields are required.");
+            doGet(request, response);
+            return;
+        }
+
+        try {
+            float price = Float.parseFloat(priceStr);
+            IceCreamModel newItem = new IceCreamModel(0, name, price, type, description, availability);
+            boolean success = service.createIceCream(newItem);
+
+            if (success) {
+                request.setAttribute("success", "Ice cream added successfully.");
+            } else {
+                request.setAttribute("error", "Failed to add ice cream.");
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid price format.");
+        }
+
+        doGet(request, response);
+    }
+
+    private void handleEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idStr = request.getParameter("iceCreamId");
+        String name = request.getParameter("name");
+        String priceStr = request.getParameter("price");
+        String type = request.getParameter("type");
+        String description = request.getParameter("description");
+        String availability = request.getParameter("availability");
+
+        if (idStr == null || name == null || priceStr == null || type == null || description == null || availability == null ||
+            idStr.isEmpty() || name.isEmpty() || priceStr.isEmpty() || type.isEmpty() || description.isEmpty() || availability.isEmpty()) {
+            request.setAttribute("error", "All fields are required for editing.");
+            doGet(request, response); // Reload with error message and potentially pre-filled form
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(idStr);
+            float price = Float.parseFloat(priceStr);
+            IceCreamModel item = new IceCreamModel(id, name, price, type, description, availability);
+            boolean success = service.updateIceCream(item);
+
+            if (success) {
+                request.getSession().setAttribute("success", "Ice cream updated.");
+                // Do NOT set request.setAttribute("iceCreamToEdit", item); here.
+                // This will cause the form to remain populated.
+            } else {
+                request.setAttribute("error", "Failed to update. Check if ID exists.");
+                // Optionally, you could reload the form with the existing data for correction:
+                IceCreamModel iceCreamToEdit = service.getIceCreamById(id);
+                if (iceCreamToEdit != null) {
+                    request.setAttribute("iceCreamToEdit", iceCreamToEdit);
+                }
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid ID or price format.");
+            // Optionally, if there was an ID, reload the form with existing data:
+            String failedIdStr = request.getParameter("iceCreamId");
+            if (failedIdStr != null && !failedIdStr.isEmpty()) {
+                try {
+                    IceCreamModel iceCreamToEdit = service.getIceCreamById(Integer.parseInt(failedIdStr));
+                    if (iceCreamToEdit != null) {
+                        request.setAttribute("iceCreamToEdit", iceCreamToEdit);
+                    }
+                } catch (NumberFormatException ignored) {
+                    // Ignore if the ID was also invalid
+                }
+            }
+        }
+
+        doGet(request, response); // Reload the Manage Menu page
+    }
+
+    private void handleDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idStr = request.getParameter("iceCreamId");
+
+        if (idStr == null || idStr.isEmpty()) {
+            request.getSession().setAttribute("error", "ID is required for deletion.");
+            response.sendRedirect("managemenu"); // Corrected redirection
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(idStr);
+            boolean success = service.deleteIceCream(id);
+
+            if (success) {
+                request.getSession().setAttribute("success", "Ice cream deleted.");
+            } else {
+                request.getSession().setAttribute("error", "Failed to delete. ID may not exist.");
+            }
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("error", "Invalid ID format.");
+        }
+
+        response.sendRedirect("managemenu"); // Corrected redirection
+    }
+
+
 }

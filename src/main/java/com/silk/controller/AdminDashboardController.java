@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.RequestDispatcher;
 
 import com.silk.model.UserModelData;
+import com.silk.service.DashboardService;
 
 @WebServlet(asyncSupported = true, urlPatterns = { "/dashboard", "/admin_logout" })
 public class AdminDashboardController extends HttpServlet {
@@ -17,6 +18,7 @@ public class AdminDashboardController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String action = request.getServletPath();
         if (action.equals("/admin_logout")) {
             HttpSession session = request.getSession();
@@ -31,7 +33,25 @@ public class AdminDashboardController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
+
+        // Set user
         request.setAttribute("user", user);
+
+        // Get KPI data
+        DashboardService dashboardService = new DashboardService();
+        int totalOrders = dashboardService.getTotalOrders();
+        int completedOrders = dashboardService.getCompletedOrders();
+        double totalSales = dashboardService.getTotalSales();
+        String popularItem = dashboardService.getMostPopularItem();
+        int totalFlavors = dashboardService.getTotalIceCreamFlavors();
+
+        // Set attributes
+        request.setAttribute("totalOrders", totalOrders);
+        request.setAttribute("completedOrders", completedOrders);
+        request.setAttribute("totalSales", totalSales);
+        request.setAttribute("popularItem", popularItem);
+        request.setAttribute("totalFlavors", totalFlavors);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp");
         dispatcher.forward(request, response);
     }

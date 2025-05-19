@@ -98,6 +98,14 @@ body {
     margin-bottom: 10px;
 }
 
+.nav li{
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
 /* --- Add Button (+) --- */
 .add-btn {
     position: absolute;
@@ -120,6 +128,16 @@ body {
 
 .flavor-item:hover .add-btn {
     opacity: 1; /* Show on hover */
+}
+
+.logout-button{
+    background-color: #a0522d; /* Brown */
+    color: white;
+
+}
+
+.nav-button:hover, .nav a:hover {
+    background-color: #80421e; /* Darker brown */
 }
 
 .add-btn:hover {

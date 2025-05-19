@@ -73,29 +73,35 @@ public class ImageUtil {
 	 * @return {@code true} if the file was successfully uploaded, {@code false}
 	 *         otherwise.
 	 */
-	public boolean uploadImage(Part part, String rootPath, String saveFolder) {
-		String savePath = getSavePath(saveFolder);
-		File fileSaveDir = new File(savePath);
+	public boolean uploadImage(Part part, String fullSavePath) {
+	    File fileSaveDir = new File(fullSavePath);
 
-		// Ensure the directory exists
-		if (!fileSaveDir.exists()) {
-			if (!fileSaveDir.mkdir()) {
-				return false; // Failed to create the directory
-			}
-		}
-		try {
-			// Get the image name
-			String imageName = getImageNameFromPart(part);
-			// Create the file path
-			String filePath = savePath + "/" + imageName;
-			// Write the file to the server
-			part.write(filePath);
-			return true; // Upload successful
-		} catch (IOException e) {
-			e.printStackTrace(); // Log the exception
-			return false; // Upload failed
-		}
+	    // Debug and ensure the directory exists
+	    if (!fileSaveDir.exists()) {
+	        System.out.println("Directory does not exist. Trying to create: " + fullSavePath);
+	        if (!fileSaveDir.mkdirs()) {
+	            System.out.println("Failed to create directory: " + fullSavePath);
+	            return false;
+	        } else {
+	            System.out.println("Directory created: " + fullSavePath);
+	        }
+	    } else {
+	        System.out.println("Directory already exists: " + fullSavePath);
+	    }
+
+	    try {
+	        String imageName = getImageNameFromPart(part);
+	        String filePath = fullSavePath + File.separator + imageName;
+	        System.out.println("Uploading to: " + filePath);
+	        part.write(filePath);
+	        return true;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
+
 	
 	public String getSavePath(String saveFolder) {
 		return "C:/Users/Aarya/eclipse-workspace/silk/src/main/webapp/resources/images/"+saveFolder+"/";

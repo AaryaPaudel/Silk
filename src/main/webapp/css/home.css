@@ -47,6 +47,7 @@ nav .profile-icon {
     position: relative; /* For potential badge positioning */
     margin-left: 5px; /* Space from cart button */
 	margin-right: 5px;
+	border-radius: 50px;
 }
 
 
@@ -166,16 +167,55 @@ nav .profile-icon {
 }
 
 .why-no-delivery {
-    background-color: #f0e6d4; /* Beige */
     padding: 50px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 3D effect */
+}
+
+.why-no-delivery .panel-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.why-no-delivery .panel-headline {
+    color: #a0522d; /* Brown */
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif; /* Elegant serif for headline */
+    font-weight: 700; /* Make it bold */
+}
+
+.why-no-delivery .panel-body {
+    color: #54331A; /* Darker Brown */
+    font-size: 1.15em;
+    line-height: 1.7;
+    font-family: 'Merriweather', serif; /* Readable serif for body */
 }
 
 .options {
     padding: 50px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 3D effect */
+}
+
+.options .panel-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.options .panel-headline {
+    color: #a0522d; /* Brown */
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif; /* Elegant serif for headline */
+    font-weight: 700; /* Make it bold */
+}
+
+.options .panel-body {
+    color: #54331A; /* Darker Brown */
+    font-size: 1.15em;
+    line-height: 1.7;
+    font-family: 'Merriweather', serif; /* Readable serif for body */
 }
 
 footer {

@@ -20,6 +20,18 @@ nav > .logo > img { /* Increased specificity */
     display: block; /* Ensure it behaves as a block element */
 }
 
+nav .logout button {
+    background-color: #a0522d; /* Brown */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #c9302c;
+}
+
 nav .pages a {
     color: #fff;
     text-decoration: none;

@@ -204,7 +204,18 @@ public class RegisterController extends HttpServlet {
             }
 
             String imageUrl = imageUtil.getImageNameFromPart(image);
+            System.out.println("Image filename: " + imageUrl);
 
+            // Get the real upload path
+            String uploadPath = getServletContext().getRealPath("/resources/images/user");
+
+            boolean isImageUploaded = imageUtil.uploadImage(image, uploadPath);
+            if (!isImageUploaded) {
+                handleError(request, response, "Image upload failed. Please try again.");
+                return;
+            }
+
+            
             password = Password.encrypt(username, password);
 
             // Create a UserModelData object
@@ -231,16 +242,16 @@ public class RegisterController extends HttpServlet {
         }
     }
 
-	private boolean uploadImage(HttpServletRequest req) throws IOException, ServletException {
-		Part image = req.getPart("image");
-		return imageUtil.uploadImage(image, req.getServletContext().getRealPath("/"), "user");
-	}
-	
-    private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
-            throws ServletException, IOException {
-        req.setAttribute("success", message);
-        req.getRequestDispatcher(redirectPage).forward(req, resp);
-    }
+//	private boolean uploadImage(HttpServletRequest req) throws IOException, ServletException {
+//		Part image = req.getPart("image");
+//		return imageUtil.uploadImage(image, req.getServletContext().getRealPath("/"), "user");
+//	}
+//	
+//    private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
+//            throws ServletException, IOException {
+//        req.setAttribute("success", message);
+//        req.getRequestDispatcher(redirectPage).forward(req, resp);
+//    }
 
     private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
             throws ServletException, IOException {

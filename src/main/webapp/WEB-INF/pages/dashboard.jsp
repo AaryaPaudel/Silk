@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,6 @@
         <div class="pages">
             <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
             <a href="${pageContext.request.contextPath}/managemenu">Manage Menu</a>
-            <a href="${pageContext.request.contextPath}/orders">Orders</a>
             <a href="${pageContext.request.contextPath}/adminprofile">Admin Profile</a>
         </div>
         <div class="login">
@@ -29,32 +29,31 @@
         <h1>Admin Dashboard</h1>
         <div class="kpi-container">
             <div class="kpi">
-                <h3>Today's Sales</h3>
-                <p>$ 450.45</p>
+                <h3>Total Sales</h3>
+                <p>$ ${totalSales}</p>
             </div>
             <div class="kpi">
-                <h3>New Orders Today</h3>
-                <p>23</p>
+                <h3>Total Orders</h3>
+                <p>${totalOrders}</p>
             </div>
             <div class="kpi">
-                <h3>Total Number of Open/Pending Orders</h3>
-                <p>15</p>
+                <h3>Completed Orders</h3>
+                <p>${completedOrders}</p>
             </div>
         </div>
         <div class="kpi-container">
             <div class="kpi">
-                <h3>Most Popular Flavor (Today)</h3>
-                <p>Raspberry Sorbet</p>
+                <h3>Most Popular Flavor</h3>
+                <p>${popularItem}</p>
             </div>
             <div class="kpi">
-                <h3>Low Stock Count</h3>
-                <p>5</p>
+                <h3>Total Flavors in Stock</h3>
+                <p>${totalFlavors}</p>
             </div>
         </div>
          <h2>Quick Action Links/Shortcuts</h2>
          <div class = "quick-actions">
             <a href="${pageContext.request.contextPath}/managemenu" class="action-link">Add New Menu Item</a>
-            <a href="${pageContext.request.contextPath}/orders" class = "action-link">View Recent Orders</a>
             <a href="${pageContext.request.contextPath}/managemenu" class = "action-link">Manage Inventory</a>
          </div>
     </main>

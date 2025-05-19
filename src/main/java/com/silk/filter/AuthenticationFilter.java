@@ -32,6 +32,7 @@ public class AuthenticationFilter implements Filter {
     private static final String DASHBOARD = "/dashboard";
     private static final String ORDERS = "/orders";
     private static final String MANAGEMENU = "/managemenu";
+    private static final String LOGOUT = "/logout";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -55,7 +56,7 @@ public class AuthenticationFilter implements Filter {
 
         // Public resources
         if (uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpeg") ||
-                uri.endsWith(".ttf") || uri.endsWith(".JPG") || uri.endsWith(".jpg")) {
+                uri.endsWith(".ttf") || uri.endsWith(".JPG") || uri.endsWith(".jpg") || uri.endsWith(LOGOUT)) {
             chain.doFilter(request, response);
             return;
         }

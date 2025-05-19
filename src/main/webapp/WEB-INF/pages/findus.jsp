@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,15 +25,19 @@
             <a href="${pageContext.request.contextPath}/about">About Us</a>
         </div>
         <div class="login">
-            <button onclick="location.href='login.jsp'">Logout</button>
+        <a href = "${pageContext.request.contextPath}/logout">
+            <button>Logout</button>
+            </a>
         </div>
         <c:if test="${not empty sessionScope.user}">
-            <div class="profile-icon">
-                <a href="${pageContext.request.contextPath}/userprofile">
-                    <img src="${pageContext.request.contextPath}/resources/images/${sessionScope.user.imageUrl}" alt="User Profile" style="width:50px;height:50px;">
-                </a>
-            </div>
-        </c:if>
+	    	<div class="profile-icon" style="display: flex; align-items: center;">
+	        <a href="${pageContext.request.contextPath}/userprofile" style="display: inline-block;">
+	            <img src="${pageContext.request.contextPath}/resources/images/icon.jpg" 
+	                 alt="User Profile"
+	                 style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc;">
+	        </a>
+	    	</div>
+		</c:if>
     </nav>
 
     <main class="findus-container">
@@ -81,14 +87,16 @@
     </main>
 
     <footer>
+        <div class="social-media">
+            <a href="#"><img src="resources/images/facebook.png" alt="Facebook"></a> <%-- Updated src with c:url --%>
+            <a href="#"><img src="resources/images/instagram.png" alt="Instagram"></a> <%-- Updated src with c:url --%>
+            <a href="#"><img src="resources/images/twitter.jpg" alt="Twitter"></a> <%-- Updated src with c:url --%>
+        </div>
         <div class="copyright">
             <p>&copy; 2025 Silk Artisanal Creamery. All rights reserved.</p>
+            <img src="resources/images/SilkLogo.png" alt="Silk Logo" height= 40px width= 50px> <%-- Updated src with c:url --%>
         </div>
     </footer>
 
-    <%-- Add Leaflet JS if using Leaflet maps --%>
-    <%-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script> --%>
-    <%-- Link to findus specific JS for map initialization --%>
-    <%-- <script src="${pageContext.request.contextPath}/js/findus.js"></script> --%>
 </body>
 </html>

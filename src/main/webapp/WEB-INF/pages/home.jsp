@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 <body>
     <nav>
         <div class="logo">
-            <img src="resources/images/SilkLogo.png" alt="Silk Logo"/>
+            <img src="${pageContext.request.contextPath}/resources/images/SilkLogo.png" alt="Silk Logo"/>
         </div>
         <div class="pages">
             <a href="${pageContext.request.contextPath}/home">Home</a>
@@ -19,16 +20,26 @@
             <a href="${pageContext.request.contextPath}/about">About Us</a>
         </div>
         <div class="login">
-        
-        <a href = "${pageContext.request.contextPath}/login">
-            <button>Login</button>
+        <a href = "${pageContext.request.contextPath}/logout">
+            <button>Logout</button>
             </a>
         </div>
-	</nav>
+        <c:if test="${not empty sessionScope.user}">
+	    	<div class="profile-icon" style="display: flex; align-items: center;">
+	        <a href="${pageContext.request.contextPath}/userprofile" style="display: inline-block;">
+	            <img src="${pageContext.request.contextPath}/resources/images/icon.jpg" 
+	                 alt="User Profile"
+	                 style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc;">
+	        </a>
+	    	</div>
+		</c:if>
+
+
+    </nav>
     
     <section class="hero">
         <div class="hero-image">
-            <img src="resources/images/icecream.png" alt="Ice Cream"/>
+            <img src="resources/images/homepage.png" alt="Ice Cream"/>
         </div>
         <div class="hero-text">
             <h1>Indulge in the Creamiest Delight</h1>
@@ -60,14 +71,26 @@
     </section>
 
     <section class="why-no-delivery">
-        <h2>Why No Delivery?</h2>
-        <p>We want you to experience our ice cream at its absolute best – freshly out of the freezer. That's why we don't offer delivery, ensuring every scoop is perfect.</p>
-    </section>
+    <div class="panel-content">
+        <h2 class="panel-headline">Why No Delivery?</h2>
+        <p class="panel-body">We believe the true magic of our artisanal creamery unfolds the moment you take that first spoonful – perfectly frozen, 
+        bursting with flavor, and with a texture that whispers of handcrafted care. To ensure this exquisite experience, we've made the conscious decision 
+        not to offer delivery.Think of it as our promise to you: every visit to Silk is a journey to ice cream perfection. You'll find our scoops are richer, 
+		our textures more sublime, enjoyed in the charming ambiance of our shop, just as our artisans intended. Come savor the difference that unwavering 
+		freshness makes. We can't wait to welcome you!</p>
+    </div>
+</section>
 
-    <section class="options">
-        <h2>We Have Sorbet and Vegan Options Too!</h2>
-        <p>Everyone deserves a taste of Silk. Enjoy our delightful sorbet and vegan options, crafted with the same care and quality as our classic ice cream.</p>
-    </section>
+<section class="options">
+    <div class="panel-content">
+        <h2 class="panel-headline">We Have Sorbet and Vegan Options Too!</h2>
+        <p class="panel-body">At Silk artisanal creamery, we're passionate about crafting joy for every palate. That's why we've lovingly developed a 
+        vibrant range of refreshing sorbets, bursting with the natural sweetness of ripe fruits. And for our vegan friends, indulge in our creamy, decadent
+         plant-based options, made with the same commitment to quality and exquisite flavor that defines our classic ice cream.Whether you're seeking a 
+         light and fruity indulgence or a rich and satisfying vegan treat, our sorbet and vegan selections offer a delightful taste of Silk's artistry. 
+         Come explore the full spectrum of our frozen creations!</p>
+    </div>
+</section>
 
     <footer>
         <div class="social-media">
